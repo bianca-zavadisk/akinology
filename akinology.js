@@ -174,7 +174,7 @@
         "res_hobbes": { texto: "Thomas Hobbes", imagem: URL_BASE + "hobbes.png", final: true, anterior: "p5_final" },
         "res_locke": { texto: "John Locke", imagem: URL_BASE + "locke.png", final: true, anterior: "p5_final" },
         "res_kant": { texto: "Immanuel Kant", imagem: URL_BASE + "kant.png", final: true, anterior: "p3_a" },
-        "res_platao": { texto: "Platão", imagem: URL_BASE + "platao.png", final: true, anterior: "p4_a" },
+        "res_platao": { texto: "Platão", subtexto: "Platão, cuja filosofia moldou profundamente a tradição ocidental, defendia que o verdadeiro conhecimento não provém apenas dos sentidos, mas da contemplação das realidades inteligíveis. Por meio da teoria da reminiscência, sustentava que conhecer é, em certo sentido, recordar verdades já contempladas pela alma; assim, pode ser considerar um precursor do inatismo. Discípulo de Sócrates, utilizava a dialética como caminho para a verdade, frequentemente recorrendo também a mitos e imagens simbólicas.", imagem: URL_BASE + "platao.png", final: true, anterior: "p4_a" },
         "res_descartes": { texto: "René Descartes", imagem: URL_BASE + "descartes.png", final: true, anterior: "p4_a" },
         "res_positivistas": { texto: "Positivistas Lógicos", imagem: URL_BASE + "positivistas.png", final: true, anterior: "p2_b" },
         "res_popper": { texto: "Karl Popper", imagem: URL_BASE + "popper.png", final: true, anterior: "p3_b" },
@@ -223,6 +223,7 @@
                 const sub = document.createElement('p');
                 sub.innerText = etapa.subtexto;
                 sub.style.color = "#7f8c8d";
+                sub.style.cssText = "font-size: .8rem;"
                 painel.appendChild(sub);
             }
 
