@@ -1,7 +1,7 @@
 (function() {
     const URL_BASE = "https://raw.githubusercontent.com/bianca-zavadisk/akinology/main/images/";
 
-    const fluxo = {
+    const fluxo1 = {
         "inicio": {
             texto: "Pense em um filósofo...",
             subtexto: "",
@@ -76,6 +76,111 @@
         "res_6": { texto: "Newton", imagem: URL_BASE + "newton.png", final: true, anterior: "p3_a" },
         "res_7": { texto: "Decartes", imagem: URL_BASE + "decartes.png", final: true, anterior: "p3_c" },
         "res_8": { texto: "Bacon", imagem: URL_BASE + "bacon.png", final: true, anterior: "p3_a" }
+    };
+
+    const fluxo = {
+        "inicio": {
+            texto: "Pense em um filósofo...",
+            subtexto: "",
+            botoes: [{ label: "Começar", destino: "p1", cor: "#2ecc71" }]
+        },
+        "p1": {
+            texto: "O seu filósofo foca primariamente na metodologia e no progresso da ciência moderna?",
+            botoes: [
+                { label: "Sim", destino: "p2_b" }, // Popper, Kuhn, Lakatos, Feyerabend, Positivistas Lógicos
+                { label: "Não", destino: "p2_a" }  // Descartes, Platão, Locke, Hume, Kant, Hobbes.
+            ],
+            anterior: "inicio"
+        },
+
+        // --- RAMO A (Teoria do Conhecimento Clássica/Moderna) ---
+        "p2_a": {
+            texto: "O seu filósofo defende que a mente humana nasce como uma 'folha em branco' (tábula rasa)?",
+            botoes: [
+                { label: "Sim", destino: "p4_final" }, // Locke, Hume, Hobbes
+                { label: "Não", destino: "p3_a" }      // Descartes, Platão, Kant
+            ],
+            anterior: "p1"
+        },
+        "p4_final": {
+            texto: "O seu filósofo nega que possamos ter certeza absoluta sobre as leis da natureza, atribuindo o princípio de causa e efeito ao mero hábito?",
+            botoes: [
+                { label: "Sim", destino: "res_hume" },
+                { label: "Não", destino: "p5_final" }
+            ],
+            anterior: "p2_a"
+        },
+        "p5_final": {
+            texto: "O seu filósofo define a sensação puramente como uma pressão mecânica dos objetos sobre os nossos órgãos dos sentidos?",
+            botoes: [
+                { label: "Sim", destino: "res_hobbes" },
+                { label: "Não", destino: "res_locke" }
+            ],
+            anterior: "p4_final"
+        },
+        "p3_a": {
+            texto: "O seu filósofo acredita na existência de ideias inatas (conceitos com os quais já nascemos, puramente através da razão)?",
+            botoes: [
+                { label: "Sim", destino: "p4_a" }, // Descartes, Platão
+                { label: "Não", destino: "res_kant" } // Kant (que possui estruturas 'a priori', mas não inatismo clássico)
+            ],
+            anterior: "p2_a"
+        },
+        "p4_a": {
+            texto: "O seu filósofo argumenta que aprender é, na verdade, um processo de recordar (reminiscência) de uma vida passada no mundo das ideias?",
+            botoes: [
+                { label: "Sim", destino: "res_platao" },
+                { label: "Não", destino: "res_descartes" }
+            ],
+            anterior: "p3_a"
+        },
+
+        // --- RAMO B (Filosofia da Ciência Contemporânea) ---
+        "p2_b": {
+            texto: "O seu filósofo rejeita qualquer metafísica como sendo 'sem sentido' e defende o princípio da verificação empírica estrita?",
+            botoes: [
+                { label: "Sim", destino: "res_positivistas" },
+                { label: "Não", destino: "p3_b" } // Popper, Kuhn, Lakatos, Feyerabend
+            ],
+            anterior: "p1"
+        },
+        "p3_b": {
+            texto: "O seu filósofo defende que uma teoria só é científica se puder ser refutada ou falseada?",
+            botoes: [
+                { label: "Sim", destino: "res_popper" },
+                { label: "Não", destino: "p4_b" } // Kuhn, Lakatos, Feyerabend
+            ],
+            anterior: "p2_b"
+        },
+        "p4_b": {
+            texto: "A teoria do seu filósofo é baseada na ideia de que a ciência avança através de rupturas chamadas de 'revoluções científicas' que mudam 'paradigmas'?",
+            botoes: [
+                { label: "Sim", destino: "res_kuhn" },
+                { label: "Não", destino: "p5_b" } // Lakatos, Feyerabend
+            ],
+            anterior: "p3_b"
+        },
+        "p5_b": {
+            texto: "O seu filósofo propôs que a ciência é estruturada em 'programas de pesquisa', contendo um núcleo duro protegido por um cinturão de hipóteses auxiliares?",
+            botoes: [
+                { label: "Sim", destino: "res_lakatos" },
+                { label: "Não", destino: "res_feyerabend" } // Feyerabend e o Anarquismo Epistemológico
+            ],
+            anterior: "p4_b"
+        },
+
+        // --- RESULTADOS ---
+        "res_hume": { texto: "David Hume", imagem: URL_BASE + "hume.png", final: true, anterior: "p4_final" },
+        "res_hobbes": { texto: "Thomas Hobbes", imagem: URL_BASE + "hobbes.png", final: true, anterior: "p5_final" },
+        "res_locke": { texto: "John Locke", imagem: URL_BASE + "locke.png", final: true, anterior: "p5_final" },
+        "res_kant": { texto: "Immanuel Kant", imagem: URL_BASE + "kant.png", final: true, anterior: "p3_a" },
+        "res_platao": { texto: "Platão", imagem: URL_BASE + "platao.png", final: true, anterior: "p4_a" },
+        "res_descartes": { texto: "René Descartes", imagem: URL_BASE + "descartes.png", final: true, anterior: "p4_a" },
+        "res_positivistas": { texto: "Positivistas Lógicos", imagem: URL_BASE + "positivistas.png", final: true, anterior: "p2_b" },
+        "res_popper": { texto: "Karl Popper", imagem: URL_BASE + "popper.png", final: true, anterior: "p3_b" },
+        "res_kuhn": { texto: "Thomas Kuhn", imagem: URL_BASE + "kuhn.png", final: true, anterior: "p4_b" },
+        "res_lakatos": { texto: "Imre Lakatos", imagem: URL_BASE + "lakatos.png", final: true, anterior: "p5_b" },
+        "res_feyerabend": { texto: "Paul Feyerabend", imagem: URL_BASE + "feyerabend.png", final: true, anterior: "p5_b" }
     };
 
     // 2. INTERFACE ESTILIZADA
