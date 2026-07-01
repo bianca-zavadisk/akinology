@@ -9,6 +9,7 @@
         },
         "p1": {
             texto: "O seu filósofo foca primariamente na metodologia e no progresso da ciência moderna?",
+            curto: "Ciência Moderna?",
             botoes: [
                 { label: "Sim", destino: "p2_b" }, // Popper, Kuhn, Lakatos, Feyerabend, Positivistas Lógicos
                 { label: "Não", destino: "p2_a" }  // Descartes, Platão, Locke, Hume, Kant, Hobbes.
@@ -19,6 +20,7 @@
         // --- RAMO A (Teoria do Conhecimento Clássica/Moderna) ---
         "p2_a": {
             texto: "O seu filósofo defende que a mente humana nasce como uma 'folha em branco' (tábula rasa)?",
+            curto: "Tábula Rasa?",
             botoes: [
                 { label: "Sim", destino: "p4_final" }, // Locke, Hume, Hobbes
                 { label: "Não", destino: "p3_a" }      // Descartes, Platão, Kant
@@ -27,6 +29,7 @@
         },
         "p4_final": {
             texto: "O seu filósofo nega que possamos ter certeza absoluta sobre as leis da natureza, atribuindo o princípio de causa e efeito ao mero hábito?",
+            curto: "Causalidade = Hábito?",
             botoes: [
                 { label: "Sim", destino: "res_hume" },
                 { label: "Não", destino: "p5_final" }
@@ -35,6 +38,7 @@
         },
         "p5_final": {
             texto: "O seu filósofo define a sensação puramente como uma pressão mecânica dos objetos sobre os nossos órgãos dos sentidos?",
+            curto: "Sensação Mecânica?",
             botoes: [
                 { label: "Sim", destino: "res_hobbes" },
                 { label: "Não", destino: "res_locke" }
@@ -43,6 +47,7 @@
         },
         "p3_a": {
             texto: "O seu filósofo acredita na existência de ideias inatas (conceitos com os quais já nascemos, puramente através da razão)?",
+            curto: "Racionalista?",
             botoes: [
                 { label: "Sim", destino: "p4_a" }, // Descartes, Platão
                 { label: "Não", destino: "res_kant" } // Kant (que possui estruturas 'a priori', mas não inatismo clássico)
@@ -51,6 +56,7 @@
         },
         "p4_a": {
             texto: "O seu filósofo argumenta que aprender é, na verdade, um processo de recordar (reminiscência) de uma vida passada no mundo das ideias?",
+            curto: "Reminiscência?",
             botoes: [
                 { label: "Sim", destino: "res_platao" },
                 { label: "Não", destino: "res_descartes" }
@@ -61,6 +67,7 @@
         // --- RAMO B (Filosofia da Ciência Contemporânea) ---
         "p2_b": {
             texto: "O seu filósofo rejeita qualquer metafísica como sendo 'sem sentido' e defende o princípio da verificação empírica estrita?",
+            curto: "Anti-Metafísica?",
             botoes: [
                 { label: "Sim", destino: "res_positivistas" },
                 { label: "Não", destino: "p3_b" } // Popper, Kuhn, Lakatos, Feyerabend
@@ -69,6 +76,7 @@
         },
         "p3_b": {
             texto: "O seu filósofo defende que uma teoria só é científica se puder ser refutada ou falseada?",
+            curto: "Falsificacionismo?",
             botoes: [
                 { label: "Sim", destino: "res_popper" },
                 { label: "Não", destino: "p4_b" } // Kuhn, Lakatos, Feyerabend
@@ -77,6 +85,7 @@
         },
         "p4_b": {
             texto: "A teoria do seu filósofo é baseada na ideia de que a ciência avança através de rupturas chamadas de 'revoluções científicas' que mudam 'paradigmas'?",
+            curto: "Paradigmas?",
             botoes: [
                 { label: "Sim", destino: "res_kuhn" },
                 { label: "Não", destino: "p5_b" } // Lakatos, Feyerabend
@@ -85,6 +94,7 @@
         },
         "p5_b": {
             texto: "O seu filósofo propôs que a ciência é estruturada em 'programas de pesquisa', contendo um núcleo duro protegido por um cinturão de hipóteses auxiliares?",
+            curto: "Núcleo Duro?",
             botoes: [
                 { label: "Sim", destino: "res_lakatos" },
                 { label: "Não", destino: "res_feyerabend" } // Feyerabend e o Anarquismo Epistemológico
@@ -110,6 +120,9 @@
     let historico = [];       // ids das etapas visitadas na sessão atual (path tracking)
     let etapaAtualId = null;
     let resizeHandler = null;
+    let cliqueForaHandler = null; // fecha o nó ativo ao clicar fora dele
+    let camadaNosDOM = null;      // camada de nós HTML sobreposta ao canvas (hover/click/tooltip)
+    let noAtivoEl = null;         // nó atualmente clicado/expandido
 
     // ---------- ELEMENTOS ----------
     const painel = document.createElement('div');
@@ -156,10 +169,22 @@
         }
 
         .ak-final-esquerda {
-            background: #ffffff;
-            padding: 36px 32px;
+            background: #e4e9ee;
+            padding: 40px 24px;
             overflow-y: auto;
-            box-shadow: 6px 0 24px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ak-final-card {
+            width: 100%;
+            max-width: 380px;
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 36px 32px;
+            box-shadow: 0 14px 36px rgba(0,0,0,0.12);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -230,15 +255,110 @@
         .ak-final-lista li {
             margin-bottom: 6px;
         }
+
+        .ak-arvore-camada {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .ak-arvore-no {
+            position: absolute;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 10px 18px;
+            overflow: hidden;
+            overflow-wrap: break-word;
+            background: #ffffff;
+            border: 1.8px solid #3b4650;
+            border-radius: 8px;
+            color: #1b2733;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            font-weight: bold;
+            font-size: 13px;
+            line-height: 1.25;
+            cursor: pointer;
+            user-select: none;
+            pointer-events: auto;
+            transform: translate(-50%, -50%);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, width 0.2s ease, height 0.2s ease;
+        }
+
+        .ak-arvore-no.no-caminho {
+            border-color: #e74c3c;
+            background: #fdecea;
+        }
+
+        .ak-arvore-no.no-atual {
+            background: #e74c3c;
+            border-color: #e74c3c;
+            color: #ffffff;
+        }
+
+        .ak-arvore-no.no-folha {
+            flex-direction: column;
+            gap: 6px;
+            font-size: 12px;
+        }
+
+        .no-folha-img {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #cfd6dc;
+            pointer-events: none;
+        }
+
+        .no-folha-nome {
+            pointer-events: none;
+        }
+
+        .ak-arvore-no.no-folha:hover,
+        .ak-arvore-no.no-folha.ativo {
+            transform: translate(-50%, -50%) scale(1.08);
+            box-shadow: 0 10px 24px rgba(0,0,0,0.24);
+            z-index: 30;
+        }
+
+        .no-texto-completo {
+            display: none;
+        }
+
+        .ak-arvore-no.no-pergunta:hover .no-texto-curto,
+        .ak-arvore-no.no-pergunta.ativo .no-texto-curto {
+            display: none;
+        }
+
+        .ak-arvore-no.no-pergunta:hover .no-texto-completo,
+        .ak-arvore-no.no-pergunta.ativo .no-texto-completo {
+            display: block;
+        }
+
+        .ak-arvore-no.no-pergunta:hover,
+        .ak-arvore-no.no-pergunta.ativo {
+            width: 280px !important;
+            height: auto !important;
+            min-height: 70px !important;
+            white-space: normal;
+            box-shadow: 0 10px 24px rgba(0,0,0,0.28);
+            z-index: 30;
+        }
     `;
     document.head.appendChild(estilo);
 
     // ---------- ÁRVORE DE DECISÃO ESTÁTICA (construída uma única vez a partir do fluxo) ----------
+    // A raiz visual é "p1": a etapa "inicio" é apenas um convite a começar e não entra na árvore
     function construirArvore(id) {
         const etapa = fluxo[id];
         const no = {
             id: id,
-            texto: etapa.final ? etapa.texto.toUpperCase() : etapa.texto,
+            texto: etapa.final ? etapa.texto.toUpperCase() : (etapa.curto || etapa.texto),
+            textoCompleto: etapa.texto, // pergunta/resposta completa, usada no tooltip e no hover/clique
+            imagem: etapa.imagem,
             final: !!etapa.final,
             filhos: []
         };
@@ -250,7 +370,7 @@
         return no;
     }
 
-    const arvore = construirArvore("inicio");
+    const arvore = construirArvore("p1");
 
     // ---------- BOTÕES REUTILIZÁVEIS ----------
     function estilizarBotaoPrimario(botao, cor) {
@@ -374,6 +494,10 @@
         direita.className = "ak-final-direita";
         direita.appendChild(treeCanvas); // reaproveita o canvas já existente no index.html
 
+        camadaNosDOM = document.createElement('div');
+        camadaNosDOM.className = "ak-arvore-camada";
+        direita.appendChild(camadaNosDOM);
+
         painel.appendChild(esquerda);
         painel.appendChild(direita);
 
@@ -382,6 +506,15 @@
 
         resizeHandler = () => renderizarArvore();
         window.addEventListener('resize', resizeHandler);
+
+        // Clique fora de qualquer nó (ou em outro nó) recolhe o nó atualmente ativo
+        cliqueForaHandler = (e) => {
+            if (noAtivoEl && !e.target.closest('.ak-arvore-no')) {
+                noAtivoEl.classList.remove('ativo');
+                noAtivoEl = null;
+            }
+        };
+        document.addEventListener('click', cliqueForaHandler);
     }
 
     // ---------- CARD DO FILÓSOFO (LADO ESQUERDO) ----------
@@ -389,23 +522,26 @@
         const esquerda = document.createElement('div');
         esquerda.className = "ak-final-esquerda";
 
+        const card = document.createElement('div');
+        card.className = "ak-final-card";
+
         if (etapa.imagem) {
             const img = document.createElement('img');
             img.src = etapa.imagem;
             img.className = "ak-final-img";
-            esquerda.appendChild(img);
+            card.appendChild(img);
         }
 
         const nome = document.createElement('h1');
         nome.className = "ak-final-nome";
         nome.innerText = etapa.texto;
-        esquerda.appendChild(nome);
+        card.appendChild(nome);
 
-        esquerda.appendChild(criarSecao(
+        card.appendChild(criarSecao(
             "Principais Ideias",
             etapa.subtexto || "Ainda não há um resumo detalhado das ideias deste filósofo nesta versão do Akinology."
         ));
-        esquerda.appendChild(criarSecaoCaminho());
+        card.appendChild(criarSecaoCaminho());
 
         const boxBotoes = document.createElement('div');
         boxBotoes.style.cssText = "display: flex; flex-direction: column; gap: 10px; margin-top: 10px; width: 100%;";
@@ -416,16 +552,17 @@
         btnReiniciar.onclick = () => mostrarEtapa("inicio");
         boxBotoes.appendChild(btnReiniciar);
 
-        esquerda.appendChild(boxBotoes);
+        card.appendChild(boxBotoes);
 
         if (etapa.anterior) {
             const bVoltar = document.createElement('button');
             bVoltar.innerText = "← Voltar pergunta";
             estilizarLinkVoltar(bVoltar);
             bVoltar.onclick = () => mostrarEtapa(etapa.anterior);
-            esquerda.appendChild(bVoltar);
+            card.appendChild(bVoltar);
         }
 
+        esquerda.appendChild(card);
         return esquerda;
     }
 
@@ -465,10 +602,17 @@
         return secao;
     }
 
-    // ---------- ÁRVORE COMPLETA (LADO DIREITO, RENDERIZADA NO CANVAS) ----------
+    // ---------- ÁRVORE COMPLETA (LADO DIREITO) ----------
+    // O canvas desenha apenas as conexões (linhas + rótulos Sim/Não); os nós são
+    // elementos HTML reais sobrepostos, o que viabiliza hover/click/tooltip nativos
+    const FONTE_ROTULO_RAMO = 'bold 10px "Segoe UI", sans-serif';
+    const ALTURA_NO_PERGUNTA = 60;
+    const ALTURA_NO_FOLHA = 88;
+    const DESLOCAMENTO_ZIGUEZAGUE = 14; // alterna a altura das folhas para evitar sobreposição
+
     function renderizarArvore() {
         const container = treeCanvas.parentElement;
-        if (!container) return;
+        if (!container || !camadaNosDOM) return;
 
         const largura = container.clientWidth;
         const altura = container.clientHeight;
@@ -487,18 +631,32 @@
         const estadoLayout = { totalFolhas: 0, profundidadeMaxima: 0 };
         calcularSlots(arvore, 0, estadoLayout);
 
-        const margem = 30;
+        const margem = 32;
         const espacoPorFolha = (largura - margem * 2) / Math.max(1, estadoLayout.totalFolhas);
-        const espacoPorNivel = (altura - margem * 2) / Math.max(1, estadoLayout.profundidadeMaxima);
-        const larguraNo = Math.min(Math.max(espacoPorFolha * 0.82, 60), 140);
 
-        posicionarNos(arvore, margem, margem, espacoPorFolha, espacoPorNivel);
-        calcularDimensoes(arvore, larguraNo);
+        // Folhas ficam compactas lado a lado; perguntas ganham bem mais largura,
+        // já que cada uma ocupa o espaço de pelo menos duas folhas abaixo dela
+        const larguraFolha = Math.min(Math.max(espacoPorFolha * 0.92, 100), 170);
+        const larguraPergunta = Math.min(Math.max(espacoPorFolha * 1.7, 190), 260);
 
-        // 2ª passagem: conexões atrás, nós na frente — destacando o caminho da sessão em vermelho
+        // Reserva, só no fim da árvore, a folga extra que as folhas (maiores e em
+        // ziguezague) precisam, e estica o restante quase até o limite do painel
+        const fatorAproveitamentoVertical = 0.92;
+        const folgaFolha = (ALTURA_NO_FOLHA - ALTURA_NO_PERGUNTA) / 2 + DESLOCAMENTO_ZIGUEZAGUE;
+        const alturaDisponivel = altura - margem * 2 - folgaFolha;
+        const espacoPorNivel = (alturaDisponivel / Math.max(1, estadoLayout.profundidadeMaxima)) * fatorAproveitamentoVertical;
+        const alturaTotalArvore = estadoLayout.profundidadeMaxima * espacoPorNivel;
+        const margemYCentralizada = margem + Math.max(0, (alturaDisponivel - alturaTotalArvore) / 2);
+
+        posicionarNos(arvore, margem, margemYCentralizada, espacoPorFolha, espacoPorNivel);
+
+        // 2ª passagem: conexões no canvas, nós HTML por cima — caminho da sessão em vermelho
         const caminhoSet = new Set(historico);
         desenharConexoes(arvore, caminhoSet);
-        desenharNos(arvore, caminhoSet, larguraNo);
+
+        noAtivoEl = null;
+        camadaNosDOM.innerHTML = "";
+        construirNosDOM(arvore, caminhoSet, larguraPergunta, larguraFolha, camadaNosDOM);
     }
 
     function calcularSlots(no, profundidade, estado) {
@@ -518,37 +676,15 @@
     function posicionarNos(no, margemX, margemY, espacoPorFolha, espacoPorNivel) {
         no.px = margemX + (no.slot + 0.5) * espacoPorFolha;
         no.py = margemY + no.depth * espacoPorNivel;
-        no.filhos.forEach(f => posicionarNos(f.node, margemX, margemY, espacoPorFolha, espacoPorNivel));
-    }
+        no.altura = no.final ? ALTURA_NO_FOLHA : ALTURA_NO_PERGUNTA;
 
-    function calcularDimensoes(no, larguraNo) {
-        treeCtx.font = no.final ? 'bold 10px "Segoe UI", sans-serif' : '9px "Segoe UI", sans-serif';
-        no.linhas = quebrarTexto(no.texto, larguraNo - 16, no.final ? 2 : 4);
-        no.altura = Math.max(30, no.linhas.length * 12 + 16);
-        no.filhos.forEach(f => calcularDimensoes(f.node, larguraNo));
-    }
-
-    function quebrarTexto(texto, larguraMaxima, maxLinhas) {
-        const palavras = texto.split(" ");
-        const linhas = [];
-        let linhaAtual = "";
-
-        palavras.forEach(palavra => {
-            const tentativa = linhaAtual ? linhaAtual + " " + palavra : palavra;
-            if (treeCtx.measureText(tentativa).width <= larguraMaxima) {
-                linhaAtual = tentativa;
-            } else {
-                linhas.push(linhaAtual);
-                linhaAtual = palavra;
-            }
-        });
-        linhas.push(linhaAtual);
-
-        if (linhas.length > maxLinhas) {
-            linhas.length = maxLinhas;
-            linhas[maxLinhas - 1] += "…";
+        // Ziguezague: folhas em slots pares sobem, ímpares descem — evita que
+        // caixas vizinhas, agora maiores por causa da imagem, se encostem
+        if (no.final) {
+            no.py += no.slot % 2 === 0 ? -DESLOCAMENTO_ZIGUEZAGUE : DESLOCAMENTO_ZIGUEZAGUE;
         }
-        return linhas;
+
+        no.filhos.forEach(f => posicionarNos(f.node, margemX, margemY, espacoPorFolha, espacoPorNivel));
     }
 
     function desenharConexoes(no, caminhoSet) {
@@ -567,41 +703,85 @@
             treeCtx.lineTo(no.px, meioY);
             treeCtx.lineTo(filho.px, meioY);
             treeCtx.lineTo(filho.px, chegadaY);
-            treeCtx.strokeStyle = noCaminho ? "#e74c3c" : "#c7cdd1";
+            treeCtx.strokeStyle = noCaminho ? "#e74c3c" : "#8a97a3";
             treeCtx.lineWidth = noCaminho ? 3 : 1.5;
             treeCtx.stroke();
+
+            desenharRotuloRamo(f.label, (no.px + filho.px) / 2, meioY, noCaminho);
 
             desenharConexoes(filho, caminhoSet);
         });
     }
 
-    function desenharNos(no, caminhoSet, larguraNo) {
-        const destacado = caminhoSet.has(no.id);
-        const ehAtual = no.id === etapaAtualId;
+    function desenharRotuloRamo(rotulo, x, y, destacado) {
+        treeCtx.font = FONTE_ROTULO_RAMO;
+        const largura = treeCtx.measureText(rotulo).width + 12;
+        const altura = 16;
 
-        const x = no.px - larguraNo / 2;
-        const y = no.py - no.altura / 2;
-
-        treeCtx.fillStyle = ehAtual ? "#e74c3c" : (destacado ? "#fdecea" : "#ffffff");
-        treeCtx.strokeStyle = destacado ? "#e74c3c" : "#c7cdd1";
-        treeCtx.lineWidth = ehAtual ? 3 : (destacado ? 2 : 1);
-
-        desenharRetanguloArredondado(x, y, larguraNo, no.altura, 6);
+        desenharRetanguloArredondado(x - largura / 2, y - altura / 2, largura, altura, 5);
+        treeCtx.fillStyle = destacado ? "#e74c3c" : "#eef1f4";
         treeCtx.fill();
+        treeCtx.strokeStyle = destacado ? "#e74c3c" : "#8a97a3";
+        treeCtx.lineWidth = 1;
         treeCtx.stroke();
 
-        treeCtx.fillStyle = ehAtual ? "#ffffff" : "#2c3e50";
-        treeCtx.font = no.final ? 'bold 10px "Segoe UI", sans-serif' : '9px "Segoe UI", sans-serif';
+        treeCtx.fillStyle = destacado ? "#ffffff" : "#3b4650";
         treeCtx.textAlign = "center";
         treeCtx.textBaseline = "middle";
+        treeCtx.fillText(rotulo, x, y + 0.5);
+    }
 
-        const alturaLinha = 12;
-        const inicioY = no.py - ((no.linhas.length - 1) * alturaLinha) / 2;
-        no.linhas.forEach((linha, i) => {
-            treeCtx.fillText(linha, no.px, inicioY + i * alturaLinha);
+    function construirNosDOM(no, caminhoSet, larguraPergunta, larguraFolha, camada) {
+        const destacado = caminhoSet.has(no.id);
+        const ehAtual = no.id === etapaAtualId;
+        const largura = no.final ? larguraFolha : larguraPergunta;
+
+        const div = document.createElement('div');
+        div.className = "ak-arvore-no" + (no.final ? " no-folha" : " no-pergunta") +
+            (destacado ? " no-caminho" : "") + (ehAtual ? " no-atual" : "");
+        div.style.left = no.px + "px";
+        div.style.top = no.py + "px";
+        div.style.width = largura + "px";
+        div.style.height = no.altura + "px";
+        div.title = no.textoCompleto; // tooltip nativo com a pergunta/resposta completa
+
+        if (no.final) {
+            const img = document.createElement('img');
+            img.className = "no-folha-img";
+            img.src = no.imagem;
+            img.alt = no.textoCompleto;
+            const nome = document.createElement('span');
+            nome.className = "no-folha-nome";
+            nome.textContent = no.texto;
+            div.appendChild(img);
+            div.appendChild(nome);
+        } else {
+            // Dois textos sobrepostos: o CSS alterna qual deles aparece no
+            // hover/clique, trocando o rótulo curto pela pergunta completa
+            const curto = document.createElement('span');
+            curto.className = "no-texto-curto";
+            curto.textContent = no.texto;
+            const completo = document.createElement('span');
+            completo.className = "no-texto-completo";
+            completo.textContent = no.textoCompleto;
+            div.appendChild(curto);
+            div.appendChild(completo);
+        }
+
+        // O mesmo listener de clique é anexado a todo nó, seja pergunta ou folha —
+        // o espaçamento vertical calculado em renderizarArvore garante que um nó
+        // nunca fique coberto pelos seus filhos, o que impediria o clique
+        div.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (noAtivoEl && noAtivoEl !== div) {
+                noAtivoEl.classList.remove('ativo');
+            }
+            div.classList.toggle('ativo');
+            noAtivoEl = div.classList.contains('ativo') ? div : null;
         });
 
-        no.filhos.forEach(f => desenharNos(f.node, caminhoSet, larguraNo));
+        camada.appendChild(div);
+        no.filhos.forEach(f => construirNosDOM(f.node, caminhoSet, larguraPergunta, larguraFolha, camada));
     }
 
     function desenharRetanguloArredondado(x, y, largura, altura, raio) {
@@ -614,12 +794,19 @@
         treeCtx.closePath();
     }
 
-    // ---------- LIMPEZA DO CANVAS (evita vazamento de memória e sobreposição gráfica) ----------
+    // ---------- LIMPEZA DA ÁRVORE (evita vazamento de memória e sobreposição gráfica) ----------
     function limparArvore() {
         if (resizeHandler) {
             window.removeEventListener('resize', resizeHandler);
             resizeHandler = null;
         }
+        if (cliqueForaHandler) {
+            document.removeEventListener('click', cliqueForaHandler);
+            cliqueForaHandler = null;
+        }
+        noAtivoEl = null;
+        camadaNosDOM = null; // a camada em si é descartada junto com o painel (innerHTML = "")
+
         treeCtx.clearRect(0, 0, treeCanvas.width, treeCanvas.height);
 
         // Só mexe em width/height inline: display continua sob controle do index.html
