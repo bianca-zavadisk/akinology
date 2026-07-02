@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Akinology</title>
-    <link rel="stylesheet" href="tree.css">
     <style>
         body {
             margin: 0;
@@ -12,8 +11,8 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            background-color: #f0f2f5;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #D9CBB6;
         }
 
         /* Container do Menu Inicial */
@@ -35,9 +34,8 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
-        .btn-tree { background-color: #2ecc71; color: white; }
-        .btn-decision { background-color: #3498db; color: white; }
-        
+        .btn-akinology { background-color: #9b59b6; color: white; }
+
         button:hover {
             transform: translateY(-3px);
             box-shadow: 0 6px 12px rgba(0,0,0,0.15);
@@ -69,9 +67,7 @@
 <body>
 
     <div id="menu-inicial">
-        <button class="btn-tree" onclick="carregarScript('tree.js')">Rodar Tree</button>
-        <button class="btn-decision" onclick="carregarScript('decision-tree.js')">Rodar Decision Tree</button>
-        <button style="background-color: #9b59b6; color: white;" onclick="carregarScript('akinology.js')">Akinology</button>
+        <button class="btn-akinology" onclick="carregarScript('akinology.js')">Akinology</button>
     </div>
 
     <button id="btn-voltar" onclick="voltarAoMenu()">← Voltar</button>

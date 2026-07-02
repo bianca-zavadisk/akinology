@@ -3,7 +3,7 @@
 
     const fluxo = {
         "inicio": {
-            texto: "Pense em um filósofo...",
+            texto: "Escolha um filósofo...",
             subtexto: "",
             botoes: [{ label: "Começar", destino: "p1", cor: "#2ecc71" }]
         },
@@ -147,7 +147,7 @@
         },
         "res_positivistas": {
             texto: "Positivistas Lógicos",
-            subtexto: "Principais ideias dos Positivistas Lógicos... (texto provisório, preencher depois)",
+            subtexto: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset's",
             imagem: URL_BASE + "positivistas.png",
             final: true,
             anterior: "p2_b"
@@ -189,6 +189,7 @@
     let cliqueForaHandler = null; // fecha o nó ativo ao clicar fora dele
     let camadaNosDOM = null;      // camada de nós HTML sobreposta ao canvas (hover/click/tooltip)
     let noAtivoEl = null;         // nó atualmente clicado/expandido
+    let cardEl = null;            // card do filósofo (lado esquerdo), atualizado ao clicar em folhas da árvore
 
     // ---------- ELEMENTOS ----------
     const painel = document.createElement('div');
@@ -225,17 +226,67 @@
             width: 400px;
         }
 
+        /* Tela inicial: caixa 25% maior que uma pergunta comum, para caber o
+           catálogo de filósofos sem sobra excessiva de espaço em branco */
+        #akinology-container.modo-inicio {
+            width: 800px;
+            max-width: 92vw;
+            padding: 50px;
+        }
+
+        /* ---- Catálogo de filósofos da tela inicial ----
+           Mesmo padrão visual (borda, cores, fontes) dos nós-folha da árvore
+           final, com todas as medidas 25% maiores. */
+        .ak-intro-filosofos {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 17.5px;
+            margin: 27.5px 0 10px 0;
+        }
+
+        .ak-intro-card {
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 7.5px;
+            width: 97.5px;
+            padding: 12.5px 10px;
+            background: #ffffff;
+            border: 1.8px solid #3b4650;
+            border-radius: 8px;
+            color: #1b2733;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            font-weight: bold;
+            font-size: 13.75px;
+            line-height: 1.25;
+            text-align: center;
+        }
+
+        .ak-intro-card-img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2.5px solid #cfd6dc;
+        }
+
+        .ak-intro-card-nome {
+            overflow-wrap: break-word;
+        }
+
         #akinology-container.modo-final {
             position: fixed;
             inset: 0;
             z-index: 9999;
             display: grid;
             grid-template-columns: 38% 62%;
-            background: #eef1f5;
+            background: #f1c40f;
         }
 
         .ak-final-esquerda {
-            background: #e4e9ee;
+            background: #D9CBB6; /* #fundo área do card */
             padding: 40px 24px;
             overflow-y: auto;
             display: flex;
@@ -247,7 +298,7 @@
         .ak-final-card {
             width: 100%;
             max-width: 380px;
-            background: #ffffff;
+            background: #eef1f5; /* #fundo card */
             border-radius: 20px;
             padding: 36px 32px;
             box-shadow: 0 14px 36px rgba(0,0,0,0.12);
@@ -263,11 +314,7 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            background-color: #fbfcfd;
-            background-image:
-                linear-gradient(#e3e8ec 1px, transparent 1px),
-                linear-gradient(90deg, #e3e8ec 1px, transparent 1px);
-            background-size: 24px 24px;
+            background-color: #f1c40f; /* #fundo área da arvore */
         }
 
         .ak-final-img {
@@ -433,16 +480,16 @@
     const arvore = construirArvore("p1");
 
     // ---------- BOTÕES REUTILIZÁVEIS ----------
-    function estilizarBotaoPrimario(botao, cor) {
+    function estilizarBotaoPrimario(botao, cor, escala = 1) {
         botao.style.cssText = `
-            padding: 12px;
+            padding: ${12 * escala}px;
             cursor: pointer;
             border: none;
-            border-radius: 12px;
+            border-radius: ${12 * escala}px;
             background: ${cor || '#3498db'};
             color: white;
             font-weight: bold;
-            font-size: 16px;
+            font-size: ${16 * escala}px;
             transition: transform 0.2s;
         `;
         botao.onmouseover = () => botao.style.transform = "scale(1.02)";
@@ -495,18 +542,25 @@
 
     function renderizarPergunta(etapa) {
         limparArvore();
-        painel.className = "modo-pergunta";
+        const ehInicio = etapaAtualId === "inicio";
+        painel.className = ehInicio ? "modo-pergunta modo-inicio" : "modo-pergunta";
+
+        const escalaTexto = ehInicio ? 1.25 : 1;
 
         const titulo = document.createElement('h2');
         titulo.innerText = etapa.texto;
-        titulo.style.cssText = "margin: 0 0 10px 0; color: #2c3e50;";
+        titulo.style.cssText = `margin: 0 0 10px 0; color: #2c3e50; font-size: ${24 * escalaTexto}px;`;
         painel.appendChild(titulo);
 
         if (etapa.subtexto) {
             const sub = document.createElement('p');
             sub.innerText = etapa.subtexto;
-            sub.style.cssText = "color: #7f8c8d; font-size: .8rem;";
+            sub.style.cssText = `color: #7f8c8d; font-size: ${12.8 * escalaTexto}px;`;
             painel.appendChild(sub);
+        }
+
+        if (ehInicio) {
+            painel.appendChild(criarGridFilosofos());
         }
 
         const boxBotoes = document.createElement('div');
@@ -515,7 +569,7 @@
         (etapa.botoes || []).forEach(btnInfo => {
             const b = document.createElement('button');
             b.innerText = btnInfo.label;
-            estilizarBotaoPrimario(b, btnInfo.cor);
+            estilizarBotaoPrimario(b, btnInfo.cor, escalaTexto);
             b.onclick = () => mostrarEtapa(btnInfo.destino);
             boxBotoes.appendChild(b);
         });
@@ -531,12 +585,41 @@
         }
     }
 
+    // ---------- CATÁLOGO DE FILÓSOFOS (TELA INICIAL) ----------
+    function criarGridFilosofos() {
+        const grid = document.createElement('div');
+        grid.className = "ak-intro-filosofos";
+
+        Object.values(fluxo)
+            .filter(etapaFluxo => etapaFluxo.final)
+            .forEach(filosofo => {
+                const card = document.createElement('div');
+                card.className = "ak-intro-card";
+
+                const img = document.createElement('img');
+                img.className = "ak-intro-card-img";
+                img.src = filosofo.imagem;
+                img.alt = filosofo.texto;
+                card.appendChild(img);
+
+                const nome = document.createElement('span');
+                nome.className = "ak-intro-card-nome";
+                nome.textContent = filosofo.texto;
+                card.appendChild(nome);
+
+                grid.appendChild(card);
+            });
+
+        return grid;
+    }
+
     function renderizarResultado(etapa) {
         painel.className = "modo-final";
 
         const esquerda = construirCard(etapa);
         const direita = document.createElement('div');
         direita.className = "ak-final-direita";
+        treeCanvas.style.display = "block";
         direita.appendChild(treeCanvas); // reaproveita o canvas já existente no index.html
 
         camadaNosDOM = document.createElement('div');
@@ -567,8 +650,18 @@
         const esquerda = document.createElement('div');
         esquerda.className = "ak-final-esquerda";
 
-        const card = document.createElement('div');
-        card.className = "ak-final-card";
+        cardEl = document.createElement('div');
+        cardEl.className = "ak-final-card";
+        preencherCard(cardEl, etapa);
+
+        esquerda.appendChild(cardEl);
+        return esquerda;
+    }
+
+    // Monta o conteúdo do card a partir de uma etapa final. Reutilizada tanto na
+    // primeira renderização quanto na troca dinâmica de filósofo pela árvore.
+    function preencherCard(card, etapa) {
+        card.innerHTML = "";
 
         if (etapa.imagem) {
             const img = document.createElement('img');
@@ -602,9 +695,6 @@
             bVoltar.onclick = () => mostrarEtapa(etapa.anterior);
             card.appendChild(bVoltar);
         }
-
-        esquerda.appendChild(card);
-        return esquerda;
     }
 
     function criarSecao(titulo, texto) {
@@ -752,6 +842,34 @@
         treeCtx.fillText(rotulo, x, y + 0.5);
     }
 
+    // ---------- SELEÇÃO DIRETA DE UM FILÓSOFO PELA ÁRVORE ----------
+    // Reconstrói a rota "inicio" → ... → id subindo pelos atributos `anterior`
+    // do fluxo, na ordem inversa (folha até a raiz) e depois invertendo o resultado.
+    function calcularCaminhoAte(id) {
+        const caminho = [];
+        let atual = id;
+
+        while (atual) {
+            caminho.unshift(atual);
+            atual = fluxo[atual].anterior;
+        }
+
+        return caminho;
+    }
+
+    // Clique numa folha da árvore: troca o filósofo do card esquerdo e recalcula
+    // o histórico da sessão para que o caminho em vermelho aponte para ele.
+    function selecionarFilosofoNaArvore(id) {
+        const etapa = fluxo[id];
+        if (!etapa || !cardEl) return;
+
+        etapaAtualId = id;
+        historico = calcularCaminhoAte(id);
+
+        preencherCard(cardEl, etapa);
+        renderizarArvore();
+    }
+
     function construirNosDOM(no, caminhoSet, larguraPergunta, larguraFolha, camada) {
         const destacado = caminhoSet.has(no.id);
         const ehAtual = no.id === etapaAtualId;
@@ -789,11 +907,19 @@
             div.appendChild(completo);
         }
 
-        // O mesmo listener de clique é anexado a todo nó, seja pergunta ou folha —
-        // o espaçamento vertical calculado em renderizarArvore garante que um nó
+        // O espaçamento vertical calculado em renderizarArvore garante que um nó
         // nunca fique coberto pelos seus filhos, o que impediria o clique
         div.addEventListener('click', (e) => {
             e.stopPropagation();
+
+            if (no.final) {
+                // Folha (filósofo): troca o contexto inteiro da tela em vez de
+                // apenas expandir o nó — o próprio renderizarArvore() já refaz
+                // a camada de nós, então não há necessidade de alternar 'ativo'
+                selecionarFilosofoNaArvore(no.id);
+                return;
+            }
+
             if (noAtivoEl && noAtivoEl !== div) {
                 noAtivoEl.classList.remove('ativo');
             }
@@ -826,11 +952,14 @@
             cliqueForaHandler = null;
         }
         noAtivoEl = null;
+        cardEl = null;
         camadaNosDOM = null; // a camada em si é descartada junto com o painel (innerHTML = "")
 
         treeCtx.clearRect(0, 0, treeCanvas.width, treeCanvas.height);
 
-        // Só mexe em width/height inline: display continua sob controle do index.html
+        // Escondido fora do modo-final: sem isso, o retângulo branco do canvas
+        // fica visível atrás do painel de pergunta
+        treeCanvas.style.display = "none";
         treeCanvas.style.width = "";
         treeCanvas.style.height = "";
 
