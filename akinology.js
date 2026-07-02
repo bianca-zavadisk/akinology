@@ -105,28 +105,28 @@
         // --- RESULTADOS ---
         "res_hume": {
             texto: "David Hume",
-            subtexto: "Principais ideias de David Hume... (texto provisório, preencher depois)",
+            subtexto: "Defende que as ideias têm origem na experiência e que são provenientes das impressões internas e externas. Argumenta que as ideias são cópias de impressões, e que a associação entre elas ocorre por semelhança, contiguidade e causa e efeito. Propõe uma separação entre relações de ideias e questões de fato. As relações de ideias não implicam existência real, enquanto as questões de fato sim, e correspondem a uma descrição do estado das coisas. Os juízos em questão de fato baseiam-se em causa e efeito. No entanto, o processo de obtenção de crenças causais são dadas pelo princípio do hábito, não envolvendo processos racionais.",
             imagem: URL_BASE + "hume.png",
             final: true,
             anterior: "p4_final"
         },
         "res_hobbes": {
             texto: "Thomas Hobbes",
-            subtexto: "Principais ideias de Thomas Hobbes... (texto provisório, preencher depois)",
+            subtexto: "Fundamenta sua filosofia em um empirismo radical e materialista, defendendo que a realidade consiste puramente de matéria em movimento e que todo conhecimento deriva da experiência sensorial. Rejeita a existência de ideias inatas, propondo que a mente humana funciona como um mecanismo que processa os estímulos do mundo exterior. Acredita que a estrutura do pensamento é lógica e mecânica: compreender a realidade equivale a entender as relações de causa e efeito que geram todos os fenômenos.",
             imagem: URL_BASE + "hobbes.png",
             final: true,
             anterior: "p5_final"
         },
         "res_locke": {
             texto: "John Locke",
-            subtexto: "Principais ideias de John Locke... (texto provisório, preencher depois)",
+            subtexto: "Critica os processos mentais de Descartes formulados sem a elaboração do funcionamento, buscando dar uma estrutura à mente. Para tanto, acredita que todas as nossas ideias têm origem na experiência, criticando as ideias inatas de descartes, defendendo que a mente é uma tábula rasa. Argumenta que a partir de ideias simples, nosso entendimento pode produzir ideias complexas. Em relação à origem das nossas ideias, defende que temos ideias advindas da sensação, e ideias advindas da reflexão. Em discordância com Hume, Locke acredita que as ideias são tudo aquilo que está no entendimento.",
             imagem: URL_BASE + "locke.png",
             final: true,
             anterior: "p5_final"
         },
         "res_kant": {
             texto: "Immanuel Kant",
-            subtexto: "Principais ideias de Immanuel Kant... (texto provisório, preencher depois)",
+            subtexto: "Fundamenta sua filosofia em uma 'Revolução Copernicana' na epistemologia, defendendo que o objeto de estudo se molda à estrutura da mente humana para ser compreendido, e não o contrário. Supera a histórica disputa entre o empirismo e o racionalismo ao propor que o conhecimento dependa da articulação de ambos para se desenvolver. Estrutura a realidade em duas dimensões distintas: o fenômeno, que representa o mundo como ele se mostra para nós, e o númeno, que constitui o mundo como ele é em si mesmo, independentemente de qualquer observação.",
             imagem: URL_BASE + "kant.png",
             final: true,
             anterior: "p3_a"
@@ -147,7 +147,7 @@
         },
         "res_positivistas": {
             texto: "Positivistas Lógicos",
-            subtexto: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset's",
+            subtexto: "Têm como objetivo reformular a filosofia usando empirismo e lógica formal. Acreditam que a ciência pode ser reduzida/traduzida para experiências concretas. São fortes defensores de que uma proposição só pode ter sentido se puder ser verificada. Criticam áreas como metafísica, teologia e ética, por conta da falta de verificabilidade. Sua corrente de pensamento surgiu no círculo de Viena, reunião de filósofos que tinha como objetivo discutir sobre ciência, filosofia e epistemologia.",
             imagem: URL_BASE + "positivistas.png",
             final: true,
             anterior: "p2_b"
@@ -161,21 +161,21 @@
         },
         "res_kuhn": {
             texto: "Thomas Kuhn",
-            subtexto: "Principais ideias de Thomas Kuhn... (texto provisório, preencher depois)",
+            subtexto: "Critica a visão tradicional de que a ciência progride de forma linear e cumulativa, propondo que o avanço científico se baseia em paradigmas, compreendidos como conjuntos de teorias compartilhadas por uma comunidade científica. Divide o desenvolvimento do conhecimento em duas fases principais: a ciência normal, na qual a investigação ocorre de maneira natural sem questionar as bases do modelo vigente; e os períodos de crise, que emergem quando o paradigma atual se torna insuficiente para explicar novos fenômenos observados. Culmina nas revoluções científicas: momentos de ruptura nos quais o modelo antigo é abandonado e substituído por um novo, estabelecendo uma relação de incomensurabilidade entre eles por enxergarem o mundo de formas totalmente distintas.",
             imagem: URL_BASE + "kuhn.png",
             final: true,
             anterior: "p4_b"
         },
         "res_lakatos": {
             texto: "Imre Lakatos",
-            subtexto: "Principais ideias de Imre Lakatos... (texto provisório, preencher depois)",
+            subtexto: "Propõe como meios da ciência os programas de pesquisa, constituídos por núcleos irredutíveis, que não podem ser falseados (heurística negativa), e um cinturão protetor de hipóteses, que pode ser modificado. Quanto ao progresso da ciência, Lakatos defende que programas progressivos são aqueles que mudanças no cinturão trazem novas descobertas. Já os programas degenerativos são os que as mudanças apenas corrigem problemas na pesquisa. Certas anomalias na pesquisa podem ser consertadas modificando o cinturão protetor, não levando necessariamente à uma crise, como defendido por Kuhn.",
             imagem: URL_BASE + "lakatos.png",
             final: true,
             anterior: "p5_b"
         },
         "res_feyerabend": {
             texto: "Paul Feyerabend",
-            subtexto: "Principais ideias de Paul Feyerabend... (texto provisório, preencher depois)",
+            subtexto: "Fundamenta sua filosofia na inexistência de um método científico, por exemplo o critério da falseabilidade, universal a ser usado na pesquisa. Acredita que grande parte da ciência é feita a partir do desenvolvimento de teorias que entram em conflito com regras bem estabelecidas. Defende o “Anything goes”: a única característica em comum entre todas as inovações da ciência é a quebra de paradigmas e uso de estratégias não convencionais.",
             imagem: URL_BASE + "feyerabend.png",
             final: true,
             anterior: "p5_b"
@@ -355,7 +355,7 @@
         .ak-final-subtexto {
             margin: 0;
             font-family: 'Segoe UI', Roboto, sans-serif;
-            font-size: 14px;
+            font-size: 16px;
             font-weight: 400;
             color: #576574;
             line-height: 1.5;
@@ -675,7 +675,7 @@
         nome.innerText = etapa.texto;
         card.appendChild(nome);
 
-        card.appendChild(criarSecao("Principais Ideias", etapa.subtexto));
+        card.appendChild(criarSecao("", etapa.subtexto));
 
         const boxBotoes = document.createElement('div');
         boxBotoes.style.cssText = "display: flex; flex-direction: column; gap: 10px; margin-top: 10px; width: 100%;";
