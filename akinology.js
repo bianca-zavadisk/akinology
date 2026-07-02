@@ -103,17 +103,83 @@
         },
 
         // --- RESULTADOS ---
-        "res_hume": { texto: "David Hume", imagem: URL_BASE + "hume.png", final: true, anterior: "p4_final" },
-        "res_hobbes": { texto: "Thomas Hobbes", imagem: URL_BASE + "hobbes.png", final: true, anterior: "p5_final" },
-        "res_locke": { texto: "John Locke", imagem: URL_BASE + "locke.png", final: true, anterior: "p5_final" },
-        "res_kant": { texto: "Immanuel Kant", imagem: URL_BASE + "kant.png", final: true, anterior: "p3_a" },
-        "res_platao": { texto: "Platão", subtexto: "Platão, cuja filosofia moldou profundamente a tradição ocidental, defendia que o verdadeiro conhecimento não provém apenas dos sentidos, mas da contemplação das realidades inteligíveis. Por meio da teoria da reminiscência, sustentava que conhecer é, em certo sentido, recordar verdades já contempladas pela alma; assim, pode ser considerar um precursor do inatismo. Discípulo de Sócrates, utilizava a dialética como caminho para a verdade, frequentemente recorrendo também a mitos e imagens simbólicas.", imagem: URL_BASE + "platao.png", final: true, anterior: "p4_a" },
-        "res_descartes": { texto: "René Descartes", imagem: URL_BASE + "descartes.png", final: true, anterior: "p4_a" },
-        "res_positivistas": { texto: "Positivistas Lógicos", imagem: URL_BASE + "positivistas.png", final: true, anterior: "p2_b" },
-        "res_popper": { texto: "Karl Popper", imagem: URL_BASE + "popper.png", final: true, anterior: "p3_b" },
-        "res_kuhn": { texto: "Thomas Kuhn", imagem: URL_BASE + "kuhn.png", final: true, anterior: "p4_b" },
-        "res_lakatos": { texto: "Imre Lakatos", imagem: URL_BASE + "lakatos.png", final: true, anterior: "p5_b" },
-        "res_feyerabend": { texto: "Paul Feyerabend", imagem: URL_BASE + "feyerabend.png", final: true, anterior: "p5_b" }
+        "res_hume": {
+            texto: "David Hume",
+            subtexto: "Principais ideias de David Hume... (texto provisório, preencher depois)",
+            imagem: URL_BASE + "hume.png",
+            final: true,
+            anterior: "p4_final"
+        },
+        "res_hobbes": {
+            texto: "Thomas Hobbes",
+            subtexto: "Principais ideias de Thomas Hobbes... (texto provisório, preencher depois)",
+            imagem: URL_BASE + "hobbes.png",
+            final: true,
+            anterior: "p5_final"
+        },
+        "res_locke": {
+            texto: "John Locke",
+            subtexto: "Principais ideias de John Locke... (texto provisório, preencher depois)",
+            imagem: URL_BASE + "locke.png",
+            final: true,
+            anterior: "p5_final"
+        },
+        "res_kant": {
+            texto: "Immanuel Kant",
+            subtexto: "Principais ideias de Immanuel Kant... (texto provisório, preencher depois)",
+            imagem: URL_BASE + "kant.png",
+            final: true,
+            anterior: "p3_a"
+        },
+        "res_platao": {
+            texto: "Platão",
+            subtexto: "Platão, cuja filosofia moldou profundamente a tradição ocidental, defendia que o verdadeiro conhecimento não provém apenas dos sentidos, mas da contemplação das realidades inteligíveis. Por meio da teoria da reminiscência, sustentava que conhecer é, em certo sentido, recordar verdades já contempladas pela alma; assim, pode ser considerar um precursor do inatismo. Discípulo de Sócrates, utilizava a dialética como caminho para a verdade, frequentemente recorrendo também a mitos e imagens simbólicas.",
+            imagem: URL_BASE + "platao.png",
+            final: true,
+            anterior: "p4_a"
+        },
+        "res_descartes": {
+            texto: "René Descartes",
+            subtexto: "Principais ideias de René Descartes... (texto provisório, preencher depois)",
+            imagem: URL_BASE + "descartes.png",
+            final: true,
+            anterior: "p4_a"
+        },
+        "res_positivistas": {
+            texto: "Positivistas Lógicos",
+            subtexto: "Principais ideias dos Positivistas Lógicos... (texto provisório, preencher depois)",
+            imagem: URL_BASE + "positivistas.png",
+            final: true,
+            anterior: "p2_b"
+        },
+        "res_popper": {
+            texto: "Karl Popper",
+            subtexto: "Principais ideias de Karl Popper... (texto provisório, preencher depois)",
+            imagem: URL_BASE + "popper.png",
+            final: true,
+            anterior: "p3_b"
+        },
+        "res_kuhn": {
+            texto: "Thomas Kuhn",
+            subtexto: "Principais ideias de Thomas Kuhn... (texto provisório, preencher depois)",
+            imagem: URL_BASE + "kuhn.png",
+            final: true,
+            anterior: "p4_b"
+        },
+        "res_lakatos": {
+            texto: "Imre Lakatos",
+            subtexto: "Principais ideias de Imre Lakatos... (texto provisório, preencher depois)",
+            imagem: URL_BASE + "lakatos.png",
+            final: true,
+            anterior: "p5_b"
+        },
+        "res_feyerabend": {
+            texto: "Paul Feyerabend",
+            subtexto: "Principais ideias de Paul Feyerabend... (texto provisório, preencher depois)",
+            imagem: URL_BASE + "feyerabend.png",
+            final: true,
+            anterior: "p5_b"
+        }
     };
 
     // ---------- ESTADO DA SESSÃO ----------
@@ -237,23 +303,17 @@
             padding-bottom: 4px;
         }
 
-        .ak-final-secao p {
+        /* ---- Descrição/subtexto do filósofo no card final ----
+           Propriedades isoladas e explícitas para fácil ajuste futuro. */
+        .ak-final-subtexto {
             margin: 0;
+            font-family: 'Segoe UI', Roboto, sans-serif;
             font-size: 14px;
+            font-weight: 400;
+            color: #576574;
             line-height: 1.5;
-            color: #576574;
-        }
-
-        .ak-final-lista {
-            margin: 0;
-            padding-left: 18px;
-            font-size: 13px;
-            line-height: 1.6;
-            color: #576574;
-        }
-
-        .ak-final-lista li {
-            margin-bottom: 6px;
+            text-align: justify;
+            text-indent: 20px;
         }
 
         .ak-arvore-camada {
@@ -410,21 +470,6 @@
         }
     }
 
-    function obterCaminhoPensamento() {
-        const passos = [];
-        for (let i = 1; i < historico.length - 1; i++) {
-            const idAtual = historico[i];
-            const idProximo = historico[i + 1];
-            const etapaAtual = fluxo[idAtual];
-            const escolha = (etapaAtual.botoes || []).find(b => b.destino === idProximo);
-            passos.push({
-                pergunta: etapaAtual.texto,
-                resposta: escolha ? escolha.label : ""
-            });
-        }
-        return passos;
-    }
-
     // ---------- CICLO DE VIDA PRINCIPAL ----------
     function mostrarEtapa(id) {
         const etapa = fluxo[id];
@@ -537,11 +582,7 @@
         nome.innerText = etapa.texto;
         card.appendChild(nome);
 
-        card.appendChild(criarSecao(
-            "Principais Ideias",
-            etapa.subtexto || "Ainda não há um resumo detalhado das ideias deste filósofo nesta versão do Akinology."
-        ));
-        card.appendChild(criarSecaoCaminho());
+        card.appendChild(criarSecao("Principais Ideias", etapa.subtexto));
 
         const boxBotoes = document.createElement('div');
         boxBotoes.style.cssText = "display: flex; flex-direction: column; gap: 10px; margin-top: 10px; width: 100%;";
@@ -575,30 +616,10 @@
         secao.appendChild(h3);
 
         const p = document.createElement('p');
+        p.className = "ak-final-subtexto";
         p.innerText = texto;
         secao.appendChild(p);
 
-        return secao;
-    }
-
-    function criarSecaoCaminho() {
-        const secao = document.createElement('div');
-        secao.className = "ak-final-secao";
-
-        const h3 = document.createElement('h3');
-        h3.innerText = "Caminho do Pensamento";
-        secao.appendChild(h3);
-
-        const lista = document.createElement('ol');
-        lista.className = "ak-final-lista";
-
-        obterCaminhoPensamento().forEach(passo => {
-            const li = document.createElement('li');
-            li.innerText = `${passo.pergunta} → ${passo.resposta}`;
-            lista.appendChild(li);
-        });
-
-        secao.appendChild(lista);
         return secao;
     }
 
