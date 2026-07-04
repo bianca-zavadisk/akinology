@@ -133,14 +133,14 @@
         },
         "res_platao": {
             texto: "Platão",
-            subtexto: "Platão, cuja filosofia moldou profundamente a tradição ocidental, defendia que o verdadeiro conhecimento não provém apenas dos sentidos, mas da contemplação das realidades inteligíveis. Por meio da teoria da reminiscência, sustentava que conhecer é, em certo sentido, recordar verdades já contempladas pela alma; assim, pode ser considerar um precursor do inatismo. Discípulo de Sócrates, utilizava a dialética como caminho para a verdade, frequentemente recorrendo também a mitos e imagens simbólicas.",
+            subtexto: "Platão, cuja filosofia moldou profundamente a tradição ocidental, defendia que o verdadeiro conhecimento não provém apenas dos sentidos, mas da contemplação das realidades inteligíveis. Por meio da teoria da reminiscência, sustentava que conhecer é, em certo sentido, recordar verdades já contempladas pela alma; assim, pode ser considerado um precursor do inatismo. Discípulo de Sócrates, utilizava a dialética como caminho para a verdade, frequentemente recorrendo também a mitos e imagens simbólicas.",
             imagem: URL_BASE + "platao.png",
             final: true,
             anterior: "p4_a"
         },
         "res_descartes": {
             texto: "René Descartes",
-            subtexto: "Principais ideias de René Descartes... (texto provisório, preencher depois)",
+            subtexto: "René Descartes destaca-se pela dúvida hiperbólica, a partir da qual questiona a confiabilidade dos sentidos e da razão para conhecer a realidade. Mais do que isso, Descartes ressalta a possibilidade de que tudo que se conhece através da razão pode ser manipulado por uma divindade maligna. Ora, mas o próprio ato de questionar pressupõe o questionador. Portanto, a única certeza que é sustentada inicialmente é o “Penso, logo existo”. Além disso, o pensador racionalista busca reabilitar a razão através da prova da existência de Deus, que, por ser sumamente infinito e perfeito, não permitiria a manipulação de algum ente maligno.",
             imagem: URL_BASE + "descartes.png",
             final: true,
             anterior: "p4_a"
@@ -154,7 +154,7 @@
         },
         "res_popper": {
             texto: "Karl Popper",
-            subtexto: "Principais ideias de Karl Popper... (texto provisório, preencher depois)",
+            subtexto: "Pode-se afirmar que Karl Popper estabeleceu os pilares da filosofia da ciência contemporânea. Através do falsificacionismo, ele concebeu a ciência como um sistema de conjecturas audaciosas e falseáveis, formuladas para explicar os fenômenos observados mantendo, intrinsecamente, a vulnerabilidade à refutação. Sob essa ótica, o papel da comunidade científica não é o de confirmar essas hipóteses, mas submetê-las aos testes mais severos na tentativa de derrubá-las. É justamente esse ciclo incessante de formulação e refutação que impulsiona o progresso e garante o rigor do conhecimento científico.",
             imagem: URL_BASE + "popper.png",
             final: true,
             anterior: "p3_b"
@@ -234,6 +234,11 @@
             padding: 50px;
         }
 
+        #akinology-container.start-container {
+            width: 900px;
+            max-width: 95vw;
+        }
+
         /* ---- Catálogo de filósofos da tela inicial ----
            Mesmo padrão visual (borda, cores, fontes) dos nós-folha da árvore
            final, com todas as medidas 25% maiores. */
@@ -241,8 +246,9 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 17.5px;
-            margin: 27.5px 0 10px 0;
+            gap: 15px;
+            margin: 30px 0 50px 0;
+            width: 100%;
         }
 
         .ak-intro-card {
@@ -250,30 +256,54 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 7.5px;
-            width: 97.5px;
-            padding: 12.5px 10px;
-            background: #ffffff;
-            border: 1.8px solid #3b4650;
-            border-radius: 8px;
-            color: #1b2733;
-            font-family: 'Segoe UI', Roboto, sans-serif;
-            font-weight: bold;
-            font-size: 13.75px;
-            line-height: 1.25;
+            justify-content: center;
+            gap: 10px;
+            padding: 15px 10px;
+            width: calc((100% - (5 * 15px)) / 6); 
+            min-width: 110px;
+            
+            background: var(--glass-bg, rgba(255, 255, 255, 0.05));
+            border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.1));
+            border-radius: 16px;
+            color: var(--text-light, #e0dced);
+            font-family: 'Nunito', sans-serif;
             text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .ak-intro-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--magic-gold, #f3c623);
+            box-shadow: 0 8px 25px rgba(243, 198, 35, 0.2);
         }
 
         .ak-intro-card-img {
-            width: 45px;
-            height: 45px;
+            width: 65px;
+            height: 65px;
             border-radius: 50%;
             object-fit: cover;
-            border: 2.5px solid #cfd6dc;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: border-color 0.3s ease;
+        }
+
+        .ak-intro-card:hover .ak-intro-card-img {
+            border-color: var(--magic-gold, #f3c623);
         }
 
         .ak-intro-card-nome {
-            overflow-wrap: break-word;
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        #akinology-container.start-container .btn-start {
+            padding: 10px 30px;
+            font-size: 1.1rem;
+            border-width: 1px;
+            animation: none;
         }
 
         #akinology-container.modo-final {
@@ -282,12 +312,12 @@
             z-index: 9999;
             display: grid;
             grid-template-columns: 38% 62%;
-            background: #f1c40f;
+            background: transparent;
         }
 
         .ak-final-esquerda {
-            background: #D9CBB6; /* #fundo área do card */
-            padding: 40px 24px;
+            background: transparent;
+            padding: 40px 10px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
@@ -297,11 +327,12 @@
 
         .ak-final-card {
             width: 100%;
-            max-width: 380px;
-            background: #eef1f5; /* #fundo card */
+            max-width: 500px;
+            background: var(--glass-bg, rgba(255, 255, 255, 0.05)); /* Alterado: fundo de vidro místico */
+            border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.1)); /* Alterado: bordinha de vidro */
             border-radius: 20px;
-            padding: 36px 32px;
-            box-shadow: 0 14px 36px rgba(0,0,0,0.12);
+            padding: 36px 24px;
+            box-shadow: 0 14px 36px rgba(0,0,0,0.12); /* Mantido: mesma sombra */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -314,7 +345,7 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            background-color: #f1c40f; /* #fundo área da arvore */
+            background-color: transparent; /* Alterado: remove o amarelo da área da árvore */
         }
 
         .ak-final-img {
@@ -322,16 +353,19 @@
             height: 140px;
             object-fit: cover;
             border-radius: 50%;
-            border: 5px solid #2c3e50;
+            border: 5px solid var(--magic-gold, #f3c623); /* Alterado: mesma espessura, mas agora em dourado */
             margin-bottom: 16px;
+            box-shadow: 0 0 15px var(--magic-gold-glow, rgba(243, 198, 35, 0.3)); /* Adicionado: leve brilho */
         }
 
         .ak-final-nome {
             margin: 0 0 20px 0;
+            font-family: 'Cinzel', serif; /* Alterado: fonte do título */
             font-size: 28px;
             letter-spacing: 1px;
             text-transform: uppercase;
-            color: #2c3e50;
+            color: var(--magic-gold, #f3c623); /* Alterado: texto dourado */
+            text-shadow: 0 0 10px var(--magic-gold-glow, rgba(243, 198, 35, 0.4)); /* Adicionado: leve brilho */
         }
 
         .ak-final-secao {
@@ -342,22 +376,22 @@
 
         .ak-final-secao h3 {
             margin: 0 0 8px 0;
+            font-family: 'Cinzel', serif; /* Alterado: fonte dos tópicos */
             font-size: 13px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: #e74c3c;
-            border-bottom: 2px solid #ecf0f1;
+            color: var(--text-light, #e0dced); /* Alterado: texto claro */
+            border-bottom: 2px solid var(--glass-border, rgba(255, 255, 255, 0.1)); /* Alterado: linha divisória suave */
             padding-bottom: 4px;
         }
 
-        /* ---- Descrição/subtexto do filósofo no card final ----
-           Propriedades isoladas e explícitas para fácil ajuste futuro. */
+        /* ---- Descrição/subtexto do filósofo no card final ---- */
         .ak-final-subtexto {
             margin: 0;
-            font-family: 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Nunito', sans-serif; /* Alterado: fonte do sistema */
             font-size: 16px;
             font-weight: 400;
-            color: #576574;
+            color: var(--text-light, #e0dced); /* Alterado: de escuro para claro para legibilidade */
             line-height: 1.5;
             text-align: justify;
             text-indent: 20px;
@@ -379,13 +413,15 @@
             padding: 10px 18px;
             overflow: hidden;
             overflow-wrap: break-word;
-            background: #ffffff;
-            border: 1.8px solid #3b4650;
+
+            background: var(--glass-bg, rgba(255, 255, 255, 0.05));
+            border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.1));
             border-radius: 8px;
-            color: #1b2733;
-            font-family: 'Segoe UI', Roboto, sans-serif;
+            color: var(--text-light, #e0dced);
+
+            font-family: 'Nunito', sans-serif;
             font-weight: bold;
-            font-size: 13px;
+            font-size: 14px;
             line-height: 1.25;
             cursor: pointer;
             user-select: none;
@@ -395,14 +431,15 @@
         }
 
         .ak-arvore-no.no-caminho {
-            border-color: #e74c3c;
-            background: #fdecea;
+            border-color: var(--magic-gold, #f3c623);
+            background: rgba(243, 198, 35, 0.08);
         }
 
         .ak-arvore-no.no-atual {
-            background: #e74c3c;
-            border-color: #e74c3c;
-            color: #ffffff;
+            background: rgba(243, 198, 35, 0.15);
+            border-color: var(--magic-gold, #f3c623);
+            color: var(--magic-gold);
+            box-shadow: 0 0 15px var(--magic-gold-glow);
         }
 
         .ak-arvore-no.no-folha {
@@ -453,6 +490,50 @@
             white-space: normal;
             box-shadow: 0 10px 24px rgba(0,0,0,0.28);
             z-index: 30;
+            background: rgba(20, 15, 30, 0.95);
+        }
+
+        .ak-arvore-no.no-pergunta.no-caminho:hover,
+        .ak-arvore-no.no-pergunta.no-caminho.ativo {
+            background: rgba(50, 42, 15, 0.95); /* Base escura quase opaca (para esconder as linhas), mas tingida de amarelo mágico */
+            border-color: var(--magic-gold, #f3c623);
+        }
+
+        body:has(#akinology-container.modo-final) #btn-voltar {
+            display: none !important;
+        }
+
+        body:has(#akinology-container.modo-final) #tela-inicial {
+            display: none !important;
+        }
+
+        body:has(#akinology-container.modo-final) {
+            background: radial-gradient(circle at 75% center, var(--bg-light) 0%, var(--bg-mid) 40%, var(--bg-deep) 100%);
+        }
+
+        /* 2. Estilo místico roxo para o botão "Jogar novamente" */
+        .btn-reiniciar-roxo {
+            padding: 12px 24px;
+            cursor: pointer;
+            border-radius: 12px;
+            font-family: 'Cinzel', serif;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            background: rgba(142, 68, 173, 0.15); /* Roxo translúcido */
+            border: 1px solid #9b59b6; /* Borda roxa definida */
+            color: #e8dff5; /* Lilás clarinho para o texto */
+            box-shadow: 0 0 12px rgba(155, 89, 182, 0.3); /* Brilho suave */
+            margin-top: 10px;
+        }
+
+        /* Animação e brilho ao passar o mouse */
+        .btn-reiniciar-roxo:hover {
+            background: rgba(142, 68, 173, 0.4);
+            border-color: #d291bc;
+            color: #ffffff;
+            box-shadow: 0 0 20px rgba(155, 89, 182, 0.7);
+            transform: translateY(-2px);
         }
     `;
     document.head.appendChild(estilo);
@@ -543,19 +624,21 @@
     function renderizarPergunta(etapa) {
         limparArvore();
         const ehInicio = etapaAtualId === "inicio";
-        painel.className = ehInicio ? "modo-pergunta modo-inicio" : "modo-pergunta";
-
-        const escalaTexto = ehInicio ? 1.25 : 1;
+        
+        // Aplica as classes principais dos containers baseadas no CSS mágico
+        painel.className = ehInicio ? "start-container" : "question-container";
 
         const titulo = document.createElement('h2');
         titulo.innerText = etapa.texto;
-        titulo.style.cssText = `margin: 0 0 10px 0; color: #2c3e50; font-size: ${24 * escalaTexto}px;`;
+        // Aplica a classe da fonte Cinzel dourada se for o início, ou texto base para perguntas
+        titulo.className = ehInicio ? "mystic-title" : "question-text";
         painel.appendChild(titulo);
 
         if (etapa.subtexto) {
             const sub = document.createElement('p');
             sub.innerText = etapa.subtexto;
-            sub.style.cssText = `color: #7f8c8d; font-size: ${12.8 * escalaTexto}px;`;
+            // Removemos as cores fixas antigas para herdar o var(--text-light) do body
+            sub.style.cssText = `margin-top: 5px; font-size: ${ehInicio ? '1.2rem' : '1rem'}; opacity: 0.8;`;
             painel.appendChild(sub);
         }
 
@@ -564,12 +647,16 @@
         }
 
         const boxBotoes = document.createElement('div');
-        boxBotoes.style.cssText = "display: flex; flex-direction: column; gap: 10px; margin-top: 25px;";
+        // Usa a classe do grid flexível que criamos no CSS
+        boxBotoes.className = "answers-grid";
+        // Um pequeno ajuste de margem caso não seja o início
+        if (!ehInicio) boxBotoes.style.marginTop = "20px";
 
         (etapa.botoes || []).forEach(btnInfo => {
             const b = document.createElement('button');
             b.innerText = btnInfo.label;
-            estilizarBotaoPrimario(b, btnInfo.cor, escalaTexto);
+            // Define o botão pulsante para o início, e o botão de vidro para as respostas
+            b.className = ehInicio ? "btn-start" : "btn-answer";
             b.onclick = () => mostrarEtapa(btnInfo.destino);
             boxBotoes.appendChild(b);
         });
@@ -578,8 +665,8 @@
 
         if (etapa.anterior) {
             const bVoltar = document.createElement('button');
-            bVoltar.innerText = "← Voltar pergunta";
-            estilizarLinkVoltar(bVoltar);
+            bVoltar.innerText = "Voltar pergunta";
+            bVoltar.className = "btn-mystic-back";
             bVoltar.onclick = () => mostrarEtapa(etapa.anterior);
             painel.appendChild(bVoltar);
         }
@@ -682,7 +769,7 @@
 
         const btnReiniciar = document.createElement('button');
         btnReiniciar.innerText = "Jogar Novamente";
-        estilizarBotaoPrimario(btnReiniciar, "#95a5a6");
+        btnReiniciar.className = "btn-reiniciar-roxo";
         btnReiniciar.onclick = () => mostrarEtapa("inicio");
         boxBotoes.appendChild(btnReiniciar);
 
@@ -690,8 +777,9 @@
 
         if (etapa.anterior) {
             const bVoltar = document.createElement('button');
-            bVoltar.innerText = "← Voltar pergunta";
-            estilizarLinkVoltar(bVoltar);
+            bVoltar.innerText = "Voltar pergunta";
+            bVoltar.className = "btn-mystic-back";
+            // estilizarLinkVoltar(bVoltar);
             bVoltar.onclick = () => mostrarEtapa(etapa.anterior);
             card.appendChild(bVoltar);
         }
@@ -814,7 +902,7 @@
             treeCtx.lineTo(no.px, meioY);
             treeCtx.lineTo(filho.px, meioY);
             treeCtx.lineTo(filho.px, chegadaY);
-            treeCtx.strokeStyle = noCaminho ? "#e74c3c" : "#8a97a3";
+            treeCtx.strokeStyle = noCaminho ? "#f3c623" : "rgba(255, 255, 255, 0.15)";
             treeCtx.lineWidth = noCaminho ? 3 : 1.5;
             treeCtx.stroke();
 
@@ -830,13 +918,22 @@
         const altura = 16;
 
         desenharRetanguloArredondado(x - largura / 2, y - altura / 2, largura, altura, 5);
-        treeCtx.fillStyle = destacado ? "#e74c3c" : "#eef1f4";
+        
+        // 1. FUNDO SÓLIDO: Pinta de roxo escuro (cor do seu bg) para "esconder" a linha de trás
+        treeCtx.fillStyle = "#1a1025"; 
         treeCtx.fill();
-        treeCtx.strokeStyle = destacado ? "#e74c3c" : "#8a97a3";
+
+        // 2. EFEITO DE VIDRO: Aplica o brilho dourado ou translúcido por cima
+        treeCtx.fillStyle = destacado ? "rgba(243, 198, 35, 0.15)" : "rgba(255, 255, 255, 0.05)";
+        treeCtx.fill();
+
+        // 3. BORDA
+        treeCtx.strokeStyle = destacado ? "#f3c623" : "rgba(255, 255, 255, 0.2)";
         treeCtx.lineWidth = 1;
         treeCtx.stroke();
 
-        treeCtx.fillStyle = destacado ? "#ffffff" : "#3b4650";
+        // 4. TEXTO
+        treeCtx.fillStyle = destacado ? "#f3c623" : "#e0dced";
         treeCtx.textAlign = "center";
         treeCtx.textBaseline = "middle";
         treeCtx.fillText(rotulo, x, y + 0.5);

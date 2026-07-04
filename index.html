@@ -3,71 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Akinology</title>
-    <style>
-        body {
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #D9CBB6;
-        }
-
-        /* Container do Menu Inicial */
-        #menu-inicial {
-            display: flex;
-            gap: 20px;
-            z-index: 10;
-        }
-
-        /* Estilização dos Botões */
-        button {
-            padding: 15px 30px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            border: none;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        .btn-akinology { background-color: #9b59b6; color: white; }
-
-        button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-            filter: brightness(1.1);
-        }
-
-        /* Botão Voltar (Escondido inicialmente) */
-        #btn-voltar {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            padding: 10px 20px;
-            background-color: #e74c3c;
-            color: white;
-            display: none; /* Escondido */
-            font-size: 14px;
-        }
-
-        canvas {
-            background-color: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            display: none; /* Canvas começa escondido */
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 
 <body>
 
-    <div id="menu-inicial">
-        <button class="btn-akinology" onclick="carregarScript('akinology.js')">Akinology</button>
+    <div class="start-container" id="tela-inicial">
+        <h1 class="mystic-title">Akinology</h1>
+        <button id="start-button" class="btn-start" onclick="carregarScript('akinology.js')">Consulte o oráculo</button>
     </div>
 
     <button id="btn-voltar" onclick="voltarAoMenu()">← Voltar</button>
@@ -75,14 +19,16 @@
     <canvas id="treeCanvas" width="700" height="600"></canvas>
 
     <script>
-        const menu = document.getElementById('menu-inicial');
+        const menu = document.getElementById('tela-inicial');
+        const startButton = document.getElementById('start-button');
         const btnVoltar = document.getElementById('btn-voltar');
         const canvas = document.getElementById('treeCanvas');
         const ctx = canvas.getContext('2d');
 
         function carregarScript(nomeArquivo) {
             // 1. Esconde menu e mostra canvas + voltar
-            menu.style.display = 'none';
+            menu.style.animation = 'none';
+            startButton.style.display = 'none';
             canvas.style.display = 'block';
             btnVoltar.style.display = 'block';
 
@@ -101,7 +47,8 @@
 
         function voltarAoMenu() {
             // 1. Mostra menu e esconde o resto
-            menu.style.display = 'flex';
+            menu.style.display = '';
+            startButton.style.display = '';
             canvas.style.display = 'none';
             btnVoltar.style.display = 'none';
 

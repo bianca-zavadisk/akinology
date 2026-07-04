@@ -1,0 +1,243 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Nunito:wght@400;600&display=swap');
+
+:root {
+    --bg-deep: #080811;
+    --bg-mid: #1a1025;
+    --bg-light: #2d1b4e;
+    --magic-gold: #f3c623;
+    --magic-gold-glow: rgba(243, 198, 35, 0.6);
+    --text-light: #e0dced;
+    --glass-bg: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: radial-gradient(circle at center, var(--bg-light) 0%, var(--bg-mid) 40%, var(--bg-deep) 100%);
+    color: var(--text-light);
+    font-family: 'Nunito', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow-x: hidden;
+}
+
+h1, h2, .mystic-title {
+    font-family: 'Cinzel', serif;
+    text-align: center;
+    color: var(--magic-gold);
+    text-shadow: 0 0 15px var(--magic-gold-glow);
+    letter-spacing: 2px;
+}
+
+#tela-inicial .mystic-title {
+    font-size: 3.5rem;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+/* Animation for floating elements */
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
+/* Animation for the glowing start button */
+@keyframes pulseGlow {
+    0% { box-shadow: 0 0 10px var(--magic-gold-glow); }
+    50% { box-shadow: 0 0 30px var(--magic-gold-glow), 0 0 10px inset var(--magic-gold-glow); }
+    100% { box-shadow: 0 0 10px var(--magic-gold-glow); }
+}
+
+.start-container {
+    animation: float 4s ease-in-out infinite;
+    text-align: center;
+}
+
+.btn-start {
+    background: transparent;
+    color: var(--magic-gold);
+    border: 2px solid var(--magic-gold);
+    padding: 15px 40px;
+    font-size: 1.5rem;
+    font-family: 'Cinzel', serif;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    animation: pulseGlow 2.5s infinite;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.btn-start:hover {
+    background: rgba(243, 198, 35, 0.1);
+    color: var(--magic-gold);
+    box-shadow: 0 0 15px var(--magic-gold-glow);
+    transform: translateY(-2px);
+}
+
+.question-container {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 600px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    /* Fade in effect when a new question appears */
+    animation: fadeIn 0.8s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.question-text {
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-bottom: 25px;
+    line-height: 1.4;
+    color: var(--text-light);
+}
+
+.answers-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.btn-answer {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-light);
+    border: 1px solid var(--glass-border);
+    padding: 15px 20px;
+    font-size: 1.2rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Cinzel', serif;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-answer:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--magic-gold);
+    color: #fff;
+    box-shadow: 0 0 15px var(--magic-gold-glow);
+    transform: translateY(-2px);
+}
+
+/* Optional: Add a subtle mystical icon or orb before the answer text */
+.btn-answer::before {
+    content: '✧';
+    position: absolute;
+    left: 20px;
+    color: var(--magic-gold);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.btn-answer:hover::before {
+    opacity: 1;
+}
+
+/* Estilização dos Botões */
+button {
+    padding: 15px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    filter: brightness(1.1);
+}
+
+/* Botão Voltar ao Menu (Canto superior esquerdo) */
+#btn-voltar {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid var(--glass-border);
+    color: var(--magic-gold);
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    z-index: 1000;
+    display: none; /* Mantém escondido inicialmente */
+    box-shadow: none; /* Remove a sombra padrão do botão */
+}
+
+#btn-voltar:hover {
+    background: rgba(243, 198, 35, 0.1);
+    border-color: var(--magic-gold);
+    box-shadow: 0 0 15px var(--magic-gold-glow);
+    transform: translateY(-2px);
+    filter: none;
+}
+
+/* Botão de voltar pergunta (Dentro da carta) */
+.btn-mystic-back {
+    background: transparent;
+    border: none;
+    color: var(--text-light);
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    margin-top: 25px;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+    letter-spacing: 1px;
+    box-shadow: none;
+    padding: 10px;
+}
+
+.btn-mystic-back:hover {
+    opacity: 1;
+    color: var(--magic-gold);
+    text-shadow: 0 0 10px var(--magic-gold-glow);
+    transform: none;
+    box-shadow: none;
+}
+
+/* Efeito de seta se movendo ao passar o mouse */
+.btn-mystic-back::before {
+    content: '⟵';
+    margin-right: 8px;
+    transition: transform 0.3s ease;
+    display: inline-block;
+}
+
+.btn-mystic-back:hover::before {
+    transform: translateX(-5px);
+}
+
+canvas {
+    /* background-color: white; */
+    /* border-radius: 12px; */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    display: none;
+    /* Canvas começa escondido */
+}
