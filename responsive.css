@@ -1,0 +1,50 @@
+@media (hover: none) {
+
+    /* 1. Tira o pulo e o brilho dos cards na tela inicial */
+    .ak-intro-card:hover {
+        transform: none !important;
+        background: var(--glass-bg, rgba(255, 255, 255, 0.05)) !important;
+        border-color: var(--glass-border, rgba(255, 255, 255, 0.1)) !important;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    .ak-intro-card:hover .ak-intro-card-img {
+        border-color: rgba(255, 255, 255, 0.2) !important;
+    }
+
+    /* 2. Tira o pulo e o brilho extra do botão roxo de reiniciar */
+    .btn-reiniciar-roxo:hover {
+        background: rgba(142, 68, 173, 0.15) !important;
+        border-color: #9b59b6 !important;
+        color: #e8dff5 !important;
+        box-shadow: 0 0 12px rgba(155, 89, 182, 0.3) !important;
+        transform: none !important;
+    }
+
+    /* 3. Tira a expansão indesejada da árvore no touch (mantém só quando tiver a classe .ativo do clique) */
+    .ak-arvore-no:hover:not(.ativo) {
+        transform: translate(-50%, -50%) !important;
+        box-shadow: none !important;
+        background: var(--glass-bg, rgba(255, 255, 255, 0.05)) !important;
+        z-index: 1 !important;
+    }
+
+    .ak-arvore-no.no-caminho:hover:not(.ativo) {
+        background: rgba(243, 198, 35, 0.08) !important;
+        border-color: var(--magic-gold, #f3c623) !important;
+    }
+
+    .ak-arvore-no.no-pergunta:hover:not(.ativo) {
+        width: auto !important;
+        min-height: auto !important;
+        white-space: nowrap !important;
+    }
+
+    .ak-arvore-no.no-pergunta:hover:not(.ativo) .no-texto-completo {
+        display: none !important;
+    }
+
+    .ak-arvore-no.no-pergunta:hover:not(.ativo) .no-texto-curto {
+        display: block !important;
+    }
+}
