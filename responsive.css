@@ -50,14 +50,13 @@
 }
 
 /* =========================================================
-           RESPONSIVIDADE DO LAYOUT (Tablets e Celulares)
+           RESPONSIVIDADE DO LAYOUT (Tablets e Telemóveis)
            ========================================================= */
 
-/* Telas médias (Tablets e celulares deitados - Até 850px) */
+/* Telas médias e telemóveis (Até 850px) */
 @media screen and (max-width: 850px) {
 
-    /* --- TELA INICIAL --- */
-    /* Muda a grade de filósofos para 3 colunas em vez de tentar amontoar */
+    /* --- 1. TELA INICIAL --- */
     .ak-intro-filosofos {
         gap: 12px !important;
     }
@@ -67,21 +66,22 @@
         min-width: 90px !important;
     }
 
-    /* --- TELA FINAL (Empilhamento: Texto no topo, Árvore embaixo) --- */
-    /* Solta o contêiner principal para permitir rolagem de página nativa */
+    /* --- 2. TELA FINAL (Forçar empilhamento total) --- */
     #akinology-container.modo-final {
         display: flex !important;
         flex-direction: column !important;
         position: relative !important;
         inset: auto !important;
         width: 100% !important;
+        height: auto !important;
         min-height: 100vh !important;
         overflow-x: hidden !important;
         overflow-y: auto !important;
     }
 
-    /* Área do Card de Texto (Fica 100% da largura, no topo) */
-    .ak-final-esquerda {
+    /* Card de Texto (Ocupa o topo) */
+    .ak-final-esquerda,
+    #akinology-container.modo-final>div:first-child {
         width: 100% !important;
         max-width: 100% !important;
         height: auto !important;
@@ -95,46 +95,61 @@
         max-width: 100% !important;
     }
 
-    /* Área da Árvore Mística (Fica abaixo do texto) */
-    .ak-final-direita {
+    /* Área do Contentor da Árvore (Fica por baixo do texto) */
+    .ak-final-direita,
+    #akinology-container.modo-final>div:last-child {
         width: 100% !important;
         max-width: 100% !important;
-        height: 600px !important;
-        /* Altura fixa garantida para caber o Canvas */
+        height: 620px !important;
+        /* Altura controlada para o Canvas */
         position: relative !important;
+        margin-top: 20px !important;
         border-left: none !important;
         border-top: 1px solid var(--glass-border) !important;
-        /* Divisória agora é horizontal */
         overflow-x: auto !important;
-        /* Mágica: Permite arrastar o canvas para os lados */
+        /* Ativa a rolagem lateral com o dedo */
         overflow-y: hidden !important;
         box-sizing: border-box !important;
-        display: flex !important;
-        align-items: flex-start !important;
-        justify-content: flex-start !important;
+        display: block !important;
     }
 
-    /* Blinda o Canvas para não tentar encolher (Senão a árvore deforma) */
+    /* --- 3. FIX DEFINITIVO DA ÁRVORE (CANVAS) --- */
+    /* Força o Canvas a ir para baixo do texto e mantém o tamanho real sem esmagar */
     #treeCanvas {
+        position: relative !important;
+        /* Remove o fixed/absolute que o JS possa colocar */
+        top: auto !important;
+        left: auto !important;
+        transform: none !important;
         max-width: none !important;
         width: 700px !important;
-        /* Mantém a largura original do desenho */
+        /* Força a largura para criar o scroll lateral */
         height: 600px !important;
         display: block !important;
         margin: 0 auto !important;
     }
 
-    /* Libera a rolagem natural da página no body durante a tela de resultado */
+    /* Força os elementos/bolhas da árvore gerados por JS a seguirem o Canvas lá em baixo */
+    .ak-camada-nos,
+    #akinology-container.modo-final .ak-final-direita>div,
+    #akinology-container.modo-final>div:last-child>div {
+        position: absolute !important;
+        width: 700px !important;
+        /* Deve ter exatamente a mesma largura do canvas */
+        height: 600px !important;
+        top: 0 !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+    }
+
+    /* Permite que a página role verticalmente no telemóvel */
     body:has(#akinology-container.modo-final) {
         overflow-y: auto !important;
     }
 }
 
-/* Telas pequenas (Celulares em pé - Até 500px) */
+/* Telas pequenas (Telemóveis em pé - Até 500px) */
 @media screen and (max-width: 500px) {
-
-    /* --- TELA INICIAL --- */
-    /* Para telas bem pequenas, 2 filósofos por linha fica mais confortável */
     .ak-intro-card {
         width: calc((100% - 12px) / 2) !important;
     }
@@ -143,8 +158,6 @@
         padding: 30px 15px !important;
     }
 
-    /* --- TELA FINAL --- */
-    /* Ajustes estéticos menores para não comer espaço da tela */
     .ak-final-nome {
         font-size: 24px !important;
         margin-bottom: 15px !important;
@@ -155,10 +168,7 @@
         height: 110px !important;
     }
 
-    /* O botão de "Jogar Novamente" ocupa a largura inteira para facilitar o toque */
     .btn-reiniciar-roxo {
         width: 100% !important;
-        margin-top: 20px !important;
-        padding: 15px 0 !important;
     }
 }
